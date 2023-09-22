@@ -1,0 +1,46 @@
+.modalcontainer{
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    border: 1px solid black;
+    border-radius: 10px;
+    padding: 1rem;
+    z-index: 4;
+    color: black;
+    width: 50%;
+}
+.inputconatiner{
+    display: flex;
+    margin-top: .5rem;
+    flex-direction: column;
+}
+.input{
+    padding: .5rem;
+    border: 1px solid black;
+    border-radius: 10px;
+    width: 100%;
+}
+.btnAdd{
+    margin-top: .5rem;
+    border: 1px solid black;
+    border-radius: 10px;
+    padding: .5rem;
+}
+label{
+    font-weight: bold;
+}
+.btnAdd{
+    background-color: rgb(37, 230, 37);
+    color: white;
+    font-weight: bold;
+}
+.remove{
+    background: red;
+    color: white;
+    border: 0px;
+    border-radius: 10px;
+}

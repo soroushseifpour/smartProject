@@ -1,0 +1,10 @@
+.container{
+    background: #333;
+    opacity: .7;
+    position:fixed;
+    width: 100%;
+    height: calc(100% + 5rem);
+    z-index: 2;
+    top: 0;
+    left: 0;
+}
