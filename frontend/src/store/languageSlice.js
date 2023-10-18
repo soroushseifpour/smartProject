@@ -1,13 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
-    marks:{
-        listening:7,
-        reading:7,
-        writing:7,
-        speaking:7,
-        finalMark:7
-    }
+    marks:{}
 }
 
 export const languageSlice = createSlice({

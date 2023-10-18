@@ -15,7 +15,7 @@ const Education = () => {
         setOpenModal(false);
         setOpenModalEdit(false);
     }
-    const modalHandler = () => {
+    const modalHandler = async () => {
         setOpenbackdrop(true);
         setOpenModal(true);
     }
@@ -28,9 +28,9 @@ const Education = () => {
     return (
         <div className={styles.education}>
             <h3 className='fw-bold'>Education</h3>
-            {educations.map(e => {
+            {educations.map((e,index) => {
                 return (
-                    <div className={styles.working} key={e.id}>
+                    <div className={styles.working} key={index}>
                         <div className={styles.header}>
                             <h5 className='fw-bold'>{e.school}</h5>
                             <button className={styles.btnedit} onClick={()=>EducationlEditHandler(e.id)}>Edit</button>

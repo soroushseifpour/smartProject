@@ -9,6 +9,7 @@ const EducationModal = () => {
   const [major, setMajor] = useState('');
   const [start, setStart] = useState('');
   const [finish, setFinish] = useState('');
+  const id=useSelector(u=>u.user.user).id;
   // const educations = useSelector((state) => state.education.educations)
   const dispatch = useDispatch()
   // Handle changes in input fields
@@ -33,16 +34,29 @@ const EducationModal = () => {
   };
 
   // Handle form submission or data saving
-  const handleSubmit = () => {
+  const handleSubmit = async (e) => {
+    e.preventDefault();
     // Here, you can access the input data in the state variables (school, degree, major, start, finish)
-    console.log({
+    const data={
+      id:id,
       school,
       degree,
       major,
       start,
       finish,
-    });
+    }
+    
+    const response= await fetch("/addeducation",{
+      method: "POST",
+      headers: {
+          'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
+    })
+    const result= await response.json();
+    // console.log(result)
     dispatch(adding({
+      id:id,
       school,
       degree,
       major,
@@ -105,7 +119,7 @@ const EducationModal = () => {
           onChange={handleFinishChange}
         />
       </div>
-      <button className={styles.btnAdd} onClick={handleSubmit}>
+      <button className={styles.btnAdd} onClick={(e)=>handleSubmit(e)}>
         Add Education
       </button>
     </div>

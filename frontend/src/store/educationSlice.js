@@ -1,22 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
-  educations: [{
-    'id':1,
-    'school':"Concordia University",
-    'degree':"Bachelor",
-    'major':"Software Engineering",
-    'start':"Feb 2023",
-    'finish':'Agu 2023',
-  },
-{
-  "id":2,
-  'school':"Concordia University",
-  'degree':"Bachelor",
-  'major':"Software Engineering",
-  'start':"Feb 2023",
-  'finish':'Agu 2023',
-}],
+  educations: [],
   newEducation:{}
 }
 
@@ -24,6 +9,9 @@ export const educationSlice = createSlice({
   name: 'educationexpereince',
   initialState,
   reducers: {
+    setting:(state,action)=>{
+      state.educations=action.payload
+    },
     adding: (state, action) => {
       console.log(action.payload)
       const obj={...action.payload,id:state.educations.length+1}
@@ -37,6 +25,6 @@ export const educationSlice = createSlice({
 })
 
 // Action creators are generated for each case reducer function
-export const { adding, removing} = educationSlice.actions
+export const { adding, removing, setting} = educationSlice.actions
 
 export default educationSlice.reducer

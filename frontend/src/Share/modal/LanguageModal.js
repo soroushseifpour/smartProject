@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import styles from './LanguageModal.module.css';
+import { useDispatch, useSelector } from 'react-redux';
 
 const LanguageModal = ({ initialValues, onSave }) => {
   // Initialize state for input values
   const [values, setValues] = useState(initialValues || {});
-
+  const dispatch=useDispatch();
+  const id=useSelector(u=>u.user.user).id;
   // Handle input changes
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -15,7 +17,7 @@ const LanguageModal = ({ initialValues, onSave }) => {
   };
 
   // Handle the "Add" button click
-  const handleAddClick = () => {
+  const handleAddClick = (e) => {
     onSave(values);
     // Clear the input values after saving
     setValues({});
@@ -76,7 +78,7 @@ const LanguageModal = ({ initialValues, onSave }) => {
           onChange={handleInputChange}
         />
       </div>
-      <button className={styles.btnAdd} onClick={handleAddClick}>
+      <button className={styles.btnAdd} onClick={(e)=>handleAddClick(e)}>
         Add
       </button>
     </div>

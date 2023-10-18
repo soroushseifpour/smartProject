@@ -1,23 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
-  works: [{
-    'id':1,
-    'position':"Software developer(Internship)",
-    'company':"Smart immigration",
-    'start':"Feb 2023",
-    'end':'Agu 2023',
-    'duties':'Develop a console application using C++ and a file system manager using Heap Tree and LinkedList to manage files based on the different categories by collaborating with a team of 3 people.Using LinkedList and data structures in C++ to manage almost 100 text file from different universities after doing web scraping'
-  },
-{
-  "id":2,
-  'position':"Software developer(Internship)",
-  'company':"Smart immigration",
-  'start':"Feb 2023",
-  'end':'Agu 2023',
-  'duties':
-      'Develop a console application using C++ and a file system manager using Heap Tree and LinkedList to manage files based on the different categories by collaborating with a team of 3 people.Using LinkedList and data structures in C++ to manage almost 100 text file from different universities after doing web scraping'
-}],
+  works: [],
   newWork:{}
 }
 
@@ -25,9 +9,23 @@ export const workSlice = createSlice({
   name: 'workexpereince',
   initialState,
   reducers: {
+    setting:(state,action)=>{
+      state.works=action.payload
+    },
     adding: (state, action) => {
       console.log(action.payload)
       state.works = [...state.works, action.payload];
+    },
+    editing:(state,action)=>{
+      const { id, updatedWork } = action.payload;
+      console.log(id)
+      // Find the index of the work with the specified ID
+      const workIndex = state.works.findIndex((work) => work.id.$oid === id);
+
+      if (workIndex !== -1) {
+        // Update the work at the found index with the updated data
+        state.works[workIndex] = updatedWork;
+      }
     },
     removing: (state,action) => {
       state.works=state.works.filter(p=>p.id!==action.payload);
@@ -36,6 +34,6 @@ export const workSlice = createSlice({
 })
 
 // Action creators are generated for each case reducer function
-export const { adding, removing} = workSlice.actions
+export const { adding, removing,setting,editing} = workSlice.actions
 
 export default workSlice.reducer

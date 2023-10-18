@@ -4,9 +4,11 @@ import { useSelector, useDispatch } from 'react-redux'
 import { adding, removing } from '../../store/workSlice'
 const WorkModal = () => {
   const works = useSelector((state) => state.work.works)
+  const id=useSelector(u=>u.user.user).id;
   const dispatch = useDispatch()
   // Create a state variable to hold the form data
   const [formData, setFormData] = useState({
+    id:id,
     position: '',
     company: '',
     start: '',
@@ -25,9 +27,19 @@ const WorkModal = () => {
   };
 
   // Handle form submission
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     // Here, you can access the formData object, which contains the updated values
     console.log(formData);
+
+    const response= await fetch("/addwork",{
+      method: "POST",
+      headers: {
+          'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(formData)
+    })
+    const result= await response.json();
+    
     dispatch(adding(formData));
     // You can perform further actions like sending the data to an API or updating state in a parent component.
   };

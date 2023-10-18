@@ -1,16 +1,19 @@
 import React, { useState } from 'react';
 import styles from './WorkModalEdit.module.css';
-
+import { useDispatch, useSelector } from 'react-redux';
+import { editing } from '../../store/workSlice'
 const WorkModalEdit = (props) => {
-  // Create a state variable to hold the form data
-
   const startDate = new Date(props.data.start);
   const endDate = new Date(props.data.end);
 
   // Format the dates as "YYYY-MM-DD" strings
   const formattedStartDate = startDate.toISOString().split('T')[0];
   const formattedEndDate = endDate.toISOString().split('T')[0];
+  const dispatch=useDispatch();
+  const id=useSelector(u=>u.user.user).id;
   const [formData, setFormData] = useState({
+    id:id,
+    work_id:props.data.id.$oid,
     position: props.data.position,
     company: props.data.company,
     start: formattedStartDate,
@@ -26,8 +29,17 @@ const WorkModalEdit = (props) => {
       [name]: value,
     });
   };
-  const addHandler=()=>{
-    //...adding
+  const addHandler=async()=>{
+    const response= await fetch("/editwork",{
+      method: "PUT",
+      headers: {
+          'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(formData)
+    })
+    const result= await response.json();
+    console.log(result)
+    dispatch(editing({id:props.data.id.$oid,updatedWork:formData}));
   }
   return (
     <div className={styles.modalcontainer}>
