@@ -40,7 +40,8 @@ const WorkModal = () => {
     })
     const result= await response.json();
     
-    dispatch(adding(formData));
+    dispatch(adding({...formData,
+      _id:{$oid:result._id},}));
     // You can perform further actions like sending the data to an API or updating state in a parent component.
   };
 

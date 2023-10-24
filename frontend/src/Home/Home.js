@@ -3,11 +3,12 @@ import Navbar from '../Navbar/Navbar'
 import styles from './Home.module.css'
 import Work from '../Work/Work'
 import Education from '../Education/Education'
-import Skills from '../Skills/Skills'
 import Language from '../Language/Laguage'
+import { useSelector } from 'react-redux'
 const Home = () => {
     const [activeItem, setActiveItem] = useState(null);
-
+    const loader=useSelector(p=>p.loader).loader;
+    
     const toggleAccordionItem = (item) => {
         if (activeItem === item) {
             setActiveItem(null); // Close the item if it's already open
@@ -18,7 +19,8 @@ const Home = () => {
     return (
         <Fragment>
             <Navbar />
-            <div className={styles.homecontainer}>
+            {loader && <p>..loading</p>}
+            {!loader && ( <div className={styles.homecontainer}>
                 <div className={styles.homeleft}>
                     <div className={styles.homeleftcard}>
                         <div className={styles.firstrow}>
@@ -114,32 +116,6 @@ const Home = () => {
                                 </div>
                             </div>
                         </div>
-
-                        {/* Item 3 */}
-                        <div className="card">
-                            <div className="card-header" id="headingThree">
-                                <h5 className="mb-0">
-                                    <button
-                                        className={`btn btn-link ${activeItem === 'item3' ? '' : 'collapsed'}`}
-                                        onClick={() => toggleAccordionItem('item3')}
-                                        
-                                        style={{"textDecoration":"none","color":"black"}}
-                                    >
-                                        Skills
-                                    </button>
-                                </h5>
-                            </div>
-                            <div
-                                id="collapseThree"
-                                className={`collapse ${activeItem === 'item3' ? 'show' : ''}`}
-                                aria-labelledby="headingThree"
-                                data-parent="#accordion"
-                            >
-                                <div className="card-body">
-                                    <Skills />
-                                </div>
-                            </div>
-                        </div>
                         {/* Item 4 */}
                         <div className="card">
                             <div className="card-header" id="headingFourth">
@@ -167,7 +143,8 @@ const Home = () => {
                         </div>
                     </div>
                 </div>
-            </div>
+            </div>)}
+           
         </Fragment>
     )
 }

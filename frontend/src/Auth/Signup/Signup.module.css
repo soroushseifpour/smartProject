@@ -1,0 +1,53 @@
+/* Login.module.css */
+.loginContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f0fff0; /* Light green background color */
+  }
+  
+  .loginForm {
+    background-color: #f0fff0; /* Light green background color */
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    text-align: center;
+  }
+  
+  .formHeader {
+    color: #008000; /* Green color for the header */
+  }
+  
+  .formGroup {
+    margin: 10px 0;
+    text-align: left;
+  }
+  
+  .label {
+    display: block;
+    font-weight: bold;
+    color: #008000; /* Green color for labels */
+  }
+  
+  input {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+  }
+  
+  .loginButton {
+    background-color: #008000; /* Green background for the button */
+    color: #fff; /* White text color for the button */
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .loginButton:hover {
+    background-color: #00a800; /* Darker green on hover */
+  }
+  

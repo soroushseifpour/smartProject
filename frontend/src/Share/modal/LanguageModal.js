@@ -22,7 +22,7 @@ const LanguageModal = ({ initialValues, onSave }) => {
     // Clear the input values after saving
     setValues({});
   };
-
+console.log(values)
   return (
     <div className={styles.modalcontainer}>
       <h3>Language</h3>
@@ -72,9 +72,9 @@ const LanguageModal = ({ initialValues, onSave }) => {
           className={styles.input}
           type='number'
           max={"9"}
-          name='finalMark'
+          name='finalmark'
           placeholder='Final Mark'
-          value={values.finalMark || ''}
+          value={values.finalmark || ''}
           onChange={handleInputChange}
         />
       </div>

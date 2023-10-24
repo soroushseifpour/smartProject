@@ -18,9 +18,9 @@ export const workSlice = createSlice({
     },
     editing:(state,action)=>{
       const { id, updatedWork } = action.payload;
-      console.log(id)
+      // console.log(id,updatedWork)
       // Find the index of the work with the specified ID
-      const workIndex = state.works.findIndex((work) => work.id.$oid === id);
+      const workIndex = state.works.findIndex((work) => work._id.$oid === id);
 
       if (workIndex !== -1) {
         // Update the work at the found index with the updated data

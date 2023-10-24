@@ -20,7 +20,7 @@ const Education = () => {
         setOpenModal(true);
     }
     const EducationlEditHandler = (id) => {
-        const data=educations.find(p=>p.id==id)
+        const data=educations.find(p=>p._id.$oid===id)
         setModalData(data);
         setOpenbackdrop(true);
         setOpenModalEdit(true);
@@ -30,10 +30,10 @@ const Education = () => {
             <h3 className='fw-bold'>Education</h3>
             {educations.map((e,index) => {
                 return (
-                    <div className={styles.working} key={index}>
+                    <div className={styles.working} key={e._id.$oid}>
                         <div className={styles.header}>
                             <h5 className='fw-bold'>{e.school}</h5>
-                            <button className={styles.btnedit} onClick={()=>EducationlEditHandler(e.id)}>Edit</button>
+                            <button className={styles.btnedit} onClick={()=>EducationlEditHandler(e._id.$oid)}>Edit</button>
                         </div>
                         <p>{e.degree} of {e.major}</p>
                         <small>{e.start}- {e.finish}</small>

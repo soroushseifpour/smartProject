@@ -3,6 +3,7 @@ import styles from './Language.module.css'
 import Backdrop from '../Share/backdrop/Backdrop';
 import LanguageModal from '../Share/modal/LanguageModal';
 import { useDispatch, useSelector } from 'react-redux';
+import { adding } from '../store/languageSlice';
 const Language = () => {
     const [openbackdrop, setOpenbackdrop] = useState(false);
     const [openModal, setOpenModal] = useState(false);
@@ -11,6 +12,7 @@ const Language = () => {
     const language = useSelector((state) => state.language.marks);
     const dispatch=useDispatch();
     const id=useSelector(u=>u.user.user).id;
+    
     useEffect(() => {
         setLanguageSkills(language)
     }, [])
@@ -22,7 +24,7 @@ const Language = () => {
             reading: values.reading,
             writing: values.writing,
             speaking: values.speaking,
-            finalMark: values.finalMark,
+            finalmark: values.finalmark,
         };
         console.log(newLanguageSkill);
         const response = await fetch("/editlanguage", {
@@ -36,7 +38,7 @@ const Language = () => {
         console.log(result);
         // Update the languageSkills state with the new skill
         setLanguageSkills(newLanguageSkill);
-
+        dispatch(adding(newLanguageSkill));
         // Close the modal and backdrop
         setOpenbackdrop(false);
         setOpenModalEdit(false);
@@ -57,23 +59,23 @@ const Language = () => {
                 <h5 className='fw-bold'>Language</h5>
                 <button className={styles.btnedit} onClick={modalEditHandler}>Edit</button>
             </div>
-            <h6>Final Mark : {languageSkills.finalMark}</h6>
+            <h6>Final Mark : {language.finalmark}</h6>
             <div className={styles.skillitemlist}>
                 <div className={styles.skillitem}>
-                    Reading : {languageSkills.reading}
+                    Reading : {language.reading}
                 </div>
                 <div className={styles.skillitem}>
-                    Listenign : {languageSkills.listening}
+                    Listenign : {language.listening}
                 </div>
                 <div className={styles.skillitem}>
-                    Speaking : {languageSkills.speaking}
+                    Speaking : {language.speaking}
                 </div>
                 <div className={styles.skillitem}>
-                    Writing : {languageSkills.writing}
+                    Writing : {language.writing}
                 </div>
             </div>
             {openbackdrop && <Backdrop onclick={backdropHandler} />}
-            {openModalEdit && <LanguageModal initialValues={languageSkills} onSave={onSave} />}
+            {openModalEdit && <LanguageModal initialValues={language} onSave={onSave} />}
         </div>
     )
 };

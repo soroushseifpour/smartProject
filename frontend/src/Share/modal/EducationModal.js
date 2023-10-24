@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import styles from './EducationModal.module.css';
 import { useSelector, useDispatch } from 'react-redux'
 import { adding, removing } from '../../store/educationSlice'
+import {set} from '../../store/loadingSlice'
 const EducationModal = () => {
   // Create state variables to hold the input data
   const [school, setSchool] = useState('');
@@ -46,6 +47,7 @@ const EducationModal = () => {
       finish,
     }
     
+    dispatch(set(true));  
     const response= await fetch("/addeducation",{
       method: "POST",
       headers: {
@@ -54,15 +56,18 @@ const EducationModal = () => {
       body: JSON.stringify(data)
     })
     const result= await response.json();
-    // console.log(result)
-    dispatch(adding({
-      id:id,
-      school,
-      degree,
-      major,
-      start,
-      finish,
-    }))
+    if (response.status === 200) {
+      const educationId = result._id;
+      dispatch(adding({
+        _id:{$oid:educationId},
+        school,
+        degree,
+        major,
+        start,
+        finish,
+      }))
+      dispatch(set(false));  
+    } 
     // You can perform further actions like sending the data to an API or updating state in a parent component.
   };
 

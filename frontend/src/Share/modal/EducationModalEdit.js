@@ -1,16 +1,21 @@
 import React, { useState } from 'react';
 import styles from './EducationModalEdit.module.css';
+import { useDispatch, useSelector } from 'react-redux';
+import { editing } from '../../store/educationSlice';
 
 const EducationModalEdit = ({ data }) => {
   // Create a state variable to hold the form data
   
   const startDate = new Date(data.start);
   const endDate = new Date(data.finish);
-
+  const dispatch=useDispatch();
+  const id=useSelector(u=>u.user.user).id;
   // Format the dates as "YYYY-MM-DD" strings
   const formattedStartDate = startDate.toISOString().split('T')[0];
   const formattedEndDate = endDate.toISOString().split('T')[0];
   const [formData, setFormData] = useState({
+    id:id,
+    _id:data._id.$oid,
     school: data.school || '', // Initialize with the data from props
     degree: data.degree || '',
     major: data.major || '',
@@ -29,10 +34,19 @@ const EducationModalEdit = ({ data }) => {
   };
 
   // Handle form submission or data saving
-  const handleSubmit = () => {
+  const handleSubmit = async() => {
     // Here, you can access the formData object, which contains the updated values
-    console.log(formData);
-
+    console.log(formData,data);
+    const response= await fetch("/editeducation",{
+      method: "PUT",
+      headers: {
+          'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(formData)
+    })
+    const result= await response.json();
+    console.log(result)
+    dispatch(editing({id:data._id.$oid,updatedEdc:formData}));
     // You can perform further actions like sending the data to an API or updating state in a parent component.
   };
 

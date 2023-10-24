@@ -13,7 +13,7 @@ const WorkModalEdit = (props) => {
   const id=useSelector(u=>u.user.user).id;
   const [formData, setFormData] = useState({
     id:id,
-    work_id:props.data.id.$oid,
+    _id:props.data._id.$oid,
     position: props.data.position,
     company: props.data.company,
     start: formattedStartDate,
@@ -39,7 +39,7 @@ const WorkModalEdit = (props) => {
     })
     const result= await response.json();
     console.log(result)
-    dispatch(editing({id:props.data.id.$oid,updatedWork:formData}));
+    dispatch(editing({id:props.data._id.$oid,updatedWork:formData}));
   }
   return (
     <div className={styles.modalcontainer}>

@@ -26,16 +26,7 @@ const Work=()=>{
         setOpenEditModal(true);
     }
     const workeditHandler=(id)=>{
-        // const data={
-        //     'position':"Software developer(Internship)",
-        //     'company':"Smart immigration",
-        //     'start':"Feb 2023",
-        //     'end':'Agu 2023',
-        //     'duties':
-        //         'Develop a console application using C++ and a file system manager using Heap Tree and LinkedList to manage files based on the different categories by collaborating with a team of 3 people.Using LinkedList and data structures in C++ to manage almost 100 text file from different universities after doing web scraping'
-        // }
-        const data=works.find(p=>p.id.$oid===id);
-        // console.log(data)
+        const data=works.find(p=>p._id.$oid===id);
         setModalData(data);
         modalEditHandler();
     }
@@ -47,10 +38,10 @@ const Work=()=>{
         {works.length>0 && (
             works.map((w,index)=>{
                 return(
-                    <div className={styles.working} key={w.id.$oid}>
+                    <div className={styles.working} key={w._id.$oid}>
                     <div className={styles.header}>
                         <h5 className='fw-bold'>{w.position}</h5>
-                        <button className={styles.btnedit} onClick={()=>workeditHandler(w.id.$oid)}>Edit</button>
+                        <button className={styles.btnedit} onClick={()=>workeditHandler(w._id.$oid)}>Edit</button>
                     </div>
                     <p>{w.company}</p>
                     <small>{w.start}- {w.end}</small>

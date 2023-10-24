@@ -13,10 +13,18 @@ export const educationSlice = createSlice({
       state.educations=action.payload
     },
     adding: (state, action) => {
-      console.log(action.payload)
-      const obj={...action.payload,id:state.educations.length+1}
-      console.log(obj)
-      state.educations = [...state.educations, obj];
+      state.educations = [...state.educations, action.payload];
+    },
+    editing:(state,action)=>{
+      const { id, updatedEdc } = action.payload;
+      console.log(updatedEdc)
+      // Find the index of the edc with the specified ID
+      const eduIndex = state.educations.findIndex((ed) => ed._id.$oid === id);
+      console.log(eduIndex);
+      if (eduIndex !== -1) {
+        // Update the edc at the found index with the updated data
+        state.educations[eduIndex] = updatedEdc;
+      }
     },
     removing: (state,action) => {
       state.educations=state.educations.filter(p=>p.id!==action.payload);
@@ -25,6 +33,6 @@ export const educationSlice = createSlice({
 })
 
 // Action creators are generated for each case reducer function
-export const { adding, removing, setting} = educationSlice.actions
+export const { adding, removing, setting,editing} = educationSlice.actions
 
 export default educationSlice.reducer
