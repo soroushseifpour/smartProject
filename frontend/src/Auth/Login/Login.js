@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { adding, setLogin } from '../../store/userSlice';
 import { set } from '../../store/loadingSlice';
+import axios from 'axios'
 const Login = () => {
     const isEmailValid = (value) => {
         // Use a regular expression to check for a basic email format
@@ -44,15 +45,12 @@ const Login = () => {
             password: passwordValue,
         }
         if (formIsvalid) {
-            console.log(u)
-            const response = await fetch('/login', {
-                method: "POST",
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(u)
-            })
-            const data = await response.json()
+            const response = await axios.post('/login', u, {
+              headers: {
+                'Content-Type': 'application/json',
+              },
+            });
+            const data = response.data;
             if (data.response.status) {
                 localStorage.setItem('user',JSON.stringify(data.response.user))
                 dispatch(adding(data.response.user))
@@ -63,7 +61,12 @@ const Login = () => {
               }
               else {
                 dispatch(setLogin(false))
+                alert(data.response.message)
+                reset();
             }
+        }
+        else{
+          alert('The inputs are not valid.')
         }
     }
     return (

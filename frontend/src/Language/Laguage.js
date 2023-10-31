@@ -4,6 +4,7 @@ import Backdrop from '../Share/backdrop/Backdrop';
 import LanguageModal from '../Share/modal/LanguageModal';
 import { useDispatch, useSelector } from 'react-redux';
 import { adding } from '../store/languageSlice';
+import axios from 'axios';
 const Language = () => {
     const [openbackdrop, setOpenbackdrop] = useState(false);
     const [openModal, setOpenModal] = useState(false);
@@ -27,21 +28,20 @@ const Language = () => {
             finalmark: values.finalmark,
         };
         console.log(newLanguageSkill);
-        const response = await fetch("/editlanguage", {
-            method: "PUT",
+        const response = await axios.put('/editlanguage', newLanguageSkill, {
             headers: {
-                'Content-Type': 'application/json'
+              'Content-Type': 'application/json',
             },
-            body: JSON.stringify(newLanguageSkill)
-        })
-        const result = await response.json();
-        console.log(result);
-        // Update the languageSkills state with the new skill
-        setLanguageSkills(newLanguageSkill);
-        dispatch(adding(newLanguageSkill));
-        // Close the modal and backdrop
-        setOpenbackdrop(false);
-        setOpenModalEdit(false);
+          });
+        const {status} = response.data;
+        if(status){
+            // Update the languageSkills state with the new skill
+            setLanguageSkills(newLanguageSkill);
+            dispatch(adding(newLanguageSkill));
+            // Close the modal and backdrop
+            setOpenbackdrop(false);
+            setOpenModalEdit(false);
+        }
 
     }
     const backdropHandler = () => {
@@ -65,7 +65,7 @@ const Language = () => {
                     Reading : {language.reading}
                 </div>
                 <div className={styles.skillitem}>
-                    Listenign : {language.listening}
+                    Listening : {language.listening}
                 </div>
                 <div className={styles.skillitem}>
                     Speaking : {language.speaking}

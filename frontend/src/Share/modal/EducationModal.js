@@ -3,6 +3,7 @@ import styles from './EducationModal.module.css';
 import { useSelector, useDispatch } from 'react-redux'
 import { adding, removing } from '../../store/educationSlice'
 import {set} from '../../store/loadingSlice'
+import axios from 'axios';
 const EducationModal = () => {
   // Create state variables to hold the input data
   const [school, setSchool] = useState('');
@@ -48,16 +49,14 @@ const EducationModal = () => {
     }
     
     dispatch(set(true));  
-    const response= await fetch("/addeducation",{
-      method: "POST",
+    const response = await axios.post('/addeducation', data, {
       headers: {
-          'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
       },
-      body: JSON.stringify(data)
-    })
-    const result= await response.json();
-    if (response.status === 200) {
-      const educationId = result._id;
+    });
+    const {status,code,_id} = response.data;
+    if (code === 200 && status) {
+      const educationId = _id;
       dispatch(adding({
         _id:{$oid:educationId},
         school,

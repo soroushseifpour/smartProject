@@ -45,7 +45,7 @@ const Education = () => {
             </button>
             {openbackdrop && <Backdrop onclick={backdropHandler} />}
             {openModal && <EducationModal />}
-            {openModalEdit && <EducationModalEdit data={modalData} />}
+            {openModalEdit && <EducationModalEdit data={modalData} backdropHandler={backdropHandler}/>}
         </div>
     )
 }

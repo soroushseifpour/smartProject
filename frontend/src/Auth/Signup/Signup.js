@@ -3,6 +3,7 @@ import styles from './Signup.module.css';
 import useInput from '../../Hooks/useInput'
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
+import axios from 'axios';
 const Signup = () => {
     const isEmailValid = (value) => {
         // Use a regular expression to check for a basic email format
@@ -37,25 +38,27 @@ const Signup = () => {
     const formIsvalid = passwordIsValid && emailIsValid;
     const formHandler = async (e) => {
         e.preventDefault()
-        const data = {
+        const user = {
             email: emailValue,
             password:passwordValue
         }
         if (formIsvalid) {
-            const response= await fetch('/signup',{
-                method:"POST",
-                headers:{
-                    'Content-Type':'application/json'
-                },
-                body:JSON.stringify(data)
-            })
-            const {status,message}= await response.json()
+          const response = await axios.post('/signup', user, {
+            headers: {
+              'Content-Type': 'application/json',
+            },
+          });
+          const {status,message} = response.data;
             if(status){
+                alert(message);
                 navigate('/login',{state:{message:"successfully register"},replace:true})
             }
             else{
                 alert(message);
             }
+        }
+        else{
+          alert("The inputs are not valid")
         }
     }
     return (

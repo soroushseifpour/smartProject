@@ -11,6 +11,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import {set} from './store/loadingSlice'
 import Login from './Auth/Login/Login';
 import Signup from './Auth/Signup/Signup';
+import axios from 'axios';
 function App() {
   const dispatch=useDispatch();
   const loader=useSelector(p=>p.loader).loader;
@@ -18,31 +19,23 @@ function App() {
   useEffect(() => {
       const user = localStorage.getItem('user');
       const parsedUser = JSON.parse(user)
-      console.log(parsedUser,isLogin)
       if (parsedUser && !isLogin) {
       dispatch(setLogin(true))
       dispatch(set(true));
-      const data={email:parsedUser.email}
-      console.log(data)
-        fetch('/fetchuser', {
-          method: "POST",
-          headers: {
-            'Content-Type': 'application/json'
-          }
-          ,
-          body:JSON.stringify(data)
-        }).then(p=>p.json()).then(i=>{
-          // console.log(i.response)
-          dispatch(userSlice.actions.adding({email:i.response.user.email,id:i.response.user._id.$oid}))
-          dispatch(setting(i.response.user.educations || []))
-          dispatch(workSlice.actions.setting(i.response.user.works || []))
-          dispatch(languageSlice.actions.adding(i.response.user.language || {}))
-        })
+      const email={email:parsedUser.email}
+      axios.post('/fetchuser', email, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      }).then(res=>{
+        const i=res.data
+        dispatch(userSlice.actions.adding({email:i.response.user.email,id:i.response.user._id.$oid}))
+        dispatch(setting(i.response.user.educations || []))
+        dispatch(workSlice.actions.setting(i.response.user.works || []))
+        dispatch(languageSlice.actions.adding(i.response.user.language || {}))
+      });
         dispatch(set(false));
       }
-      // else if (!parsedUser) {
-      //   dispatch(userActions.seLogin())
-      // }
     }, [loader])
   return (
     <Fragment>

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import styles from './WorkModalEdit.module.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { editing } from '../../store/workSlice'
+import axios from 'axios';
 const WorkModalEdit = (props) => {
   const startDate = new Date(props.data.start);
   const endDate = new Date(props.data.end);
@@ -30,16 +31,13 @@ const WorkModalEdit = (props) => {
     });
   };
   const addHandler=async()=>{
-    const response= await fetch("/editwork",{
-      method: "PUT",
+    const response = await axios.put('/editwork', formData, {
       headers: {
-          'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
       },
-      body: JSON.stringify(formData)
-    })
-    const result= await response.json();
-    console.log(result)
+    });
     dispatch(editing({id:props.data._id.$oid,updatedWork:formData}));
+    props.backdropHandler();
   }
   return (
     <div className={styles.modalcontainer}>

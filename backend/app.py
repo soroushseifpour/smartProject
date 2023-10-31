@@ -1,24 +1,35 @@
 # Import flask and datetime module for showing date and time
-from flask import Flask,request,jsonify,session
+from flask import Flask,request,jsonify,session,send_from_directory
 import datetime
 from flask_pymongo import PyMongo
 import json
 from bson.objectid import ObjectId
 import bson.json_util as json_util
 from werkzeug.utils import secure_filename
-from flask_cors import CORS
+from flask_cors import CORS,cross_origin
 import os
 import string
 import random
+import json
 from decouple import config 
 x = datetime.datetime.now()
 
 # Initializing flask app
-app = Flask(__name__,static_url_path="/")
+app = Flask(__name__,static_url_path="/")#, static_folder="../frontend/build" )
 CORS(app)
 app.config["MONGO_URI"] = config('mongo_url')
 
 mongo = PyMongo(app)
+
+# @app.route('/', defaults={'path': ''})
+# @app.route('/<path:path>')
+# @cross_origin()
+# def serve(path):
+#     if path != "" and os.path.exists("static/" + path):
+#         return send_from_directory("static", path)
+#     else:
+#         return send_from_directory("static", "index.html")
+
 # Route for seeing a data
 @app.route('/fetchuser',methods=["POST"])
 def getuser():
@@ -56,35 +67,45 @@ def send_user():
 					"code":200,
 					"message":"Successfully Added! :))"
 				}
+@app.route('/test',methods=["GET"])
+def test():  
+    user=mongo.db.users.find()
+    return{
+        "test":user[0]["email"]
+    }          
 @app.route('/login',methods=["POST"])
 def login():
-	if request.method=="POST":
-		if request.is_json:
-			user=request.json
-			email=user['email']
-			password=user['password']
-			if email and password:
-				foundUser=mongo.db.users.find_one({"email":email})
-				if foundUser :
-					if foundUser['password']==password:
-						return json.loads(json_util.dumps({"response":{
-							"code":200,
-							"status":True,
-							"user":foundUser,
-							"message":"Successfully login :)))"
-						}}))	
-					else:
-						return json.loads(json_util.dumps({"response":{
-							"code":400,
-							"status":False,
-							"message":"email or/and Password are wrong :(("
-						}}))
-				else:
-					return json.loads(json_util.dumps({"response":{
-							"code":400,
-							"status":False,
-							"message":"email or/and Password are wrong :(("
-						}}))
+    print("HHHHHHH")
+    print(request)
+    print(type(request.data))
+    if request.method=="POST":
+        if request.is_json:
+            user=request.json
+            print(user)
+            email=user['email']
+            password=user['password'] 
+            if email and password:
+                foundUser=mongo.db.users.find_one({"email":email})
+                if foundUser :
+                    if foundUser['password']==password:
+                        return json.loads(json_util.dumps({"response":{
+                            "code":200,
+                            "status":True,
+                            "user":foundUser,
+                            "message":"Successfully login :)))"
+                        }}))	
+                    else:
+                        return json.loads(json_util.dumps({"response":{
+                            "code":400,
+                            "status":False,
+                            "message":"email or/and Password are wrong :(("
+                        }}))
+                else:
+                    return json.loads(json_util.dumps({"response":{
+                            "code":400,
+                            "status":False,
+                            "message":"email or/and Password are wrong :(("
+                        }}))
 @app.route('/addeducation', methods=['POST'])
 def post_education():
     if request.method == "POST":
@@ -222,6 +243,7 @@ def edit_work():
             "code": 405,
             "message": "Method not allowed."
         }
+   
 @app.route('/editeducation', methods=['PUT'])
 def edit_education():
     if request.method == "PUT":

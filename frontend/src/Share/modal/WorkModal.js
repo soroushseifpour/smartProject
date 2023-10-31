@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import styles from './WorkModal.module.css';
 import { useSelector, useDispatch } from 'react-redux'
 import { adding, removing } from '../../store/workSlice'
-const WorkModal = () => {
+import axios from 'axios';
+const WorkModal = ({backdropHandler}) => {
   const works = useSelector((state) => state.work.works)
   const id=useSelector(u=>u.user.user).id;
   const dispatch = useDispatch()
@@ -28,20 +29,15 @@ const WorkModal = () => {
 
   // Handle form submission
   const handleSubmit = async () => {
-    // Here, you can access the formData object, which contains the updated values
-    console.log(formData);
-
-    const response= await fetch("/addwork",{
-      method: "POST",
+    const response = await axios.post('/addwork', formData, {
       headers: {
-          'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
       },
-      body: JSON.stringify(formData)
-    })
-    const result= await response.json();
-    
+    });
+    const {_id}=response.data
     dispatch(adding({...formData,
-      _id:{$oid:result._id},}));
+      _id:{$oid:_id},}));
+      backdropHandler();
     // You can perform further actions like sending the data to an API or updating state in a parent component.
   };
 

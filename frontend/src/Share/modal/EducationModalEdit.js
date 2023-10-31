@@ -2,8 +2,9 @@ import React, { useState } from 'react';
 import styles from './EducationModalEdit.module.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { editing } from '../../store/educationSlice';
+import axios from 'axios';
 
-const EducationModalEdit = ({ data }) => {
+const EducationModalEdit = ({ data,backdropHandler }) => {
   // Create a state variable to hold the form data
   
   const startDate = new Date(data.start);
@@ -36,17 +37,16 @@ const EducationModalEdit = ({ data }) => {
   // Handle form submission or data saving
   const handleSubmit = async() => {
     // Here, you can access the formData object, which contains the updated values
-    console.log(formData,data);
-    const response= await fetch("/editeducation",{
-      method: "PUT",
+    const response = await axios.put('/editeducation', formData, {
       headers: {
-          'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
       },
-      body: JSON.stringify(formData)
-    })
-    const result= await response.json();
-    console.log(result)
+    });
+    const {status,code} = response.data;
+    if (code === 200 && status) {
     dispatch(editing({id:data._id.$oid,updatedEdc:formData}));
+    backdropHandler();
+    }
     // You can perform further actions like sending the data to an API or updating state in a parent component.
   };
 

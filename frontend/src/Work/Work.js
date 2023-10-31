@@ -60,8 +60,8 @@ const Work=()=>{
             Add Work Expereice
          </button>
          {openbackdrop && <Backdrop onclick={backdropHandler}/>}
-         {openModal&& <WorkModal/>}
-         {openEditModal&& <WorkModalEdit data={modalData}/>}
+         {openModal&& <WorkModal backdropHandler={backdropHandler}/>}
+         {openEditModal&& <WorkModalEdit data={modalData} backdropHandler={backdropHandler}/>}
     </div>
     )
 };
