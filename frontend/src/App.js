@@ -24,7 +24,7 @@ function App() {
       dispatch(set(true));
       const email={email:parsedUser.email}
       axios.defaults.baseURL = 'http://127.0.0.1:5000';
-      axios.post('/fetchuser', email, {
+      axios.post('/api/fetchuser', email, {
         headers: {
           'Content-Type': 'application/json',
         },

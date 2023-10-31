@@ -31,7 +31,7 @@ mongo = PyMongo(app)
 #         return send_from_directory("static", "index.html")
 
 # Route for seeing a data
-@app.route('/fetchuser',methods=["POST"])
+@app.route('/api/fetchuser',methods=["POST"])
 def getuser():
     if request.method=="POST":
             if request.is_json:
@@ -46,7 +46,7 @@ def getuser():
                 else:
                     return json.loads(json_util.dumps({"response":{"message":"The user is not found","status":False}}))	
 
-@app.route('/signup',methods=["POST"])
+@app.route('/api/signup',methods=["POST"])
 def send_user():
     if request.method=="POST":
         if(request.is_json):
@@ -67,7 +67,7 @@ def send_user():
                     "message":"Successfully Added! :))"
                 }
         
-@app.route('/login',methods=["POST"])
+@app.route('/api/login',methods=["POST"])
 def login():
     if request.method=="POST":
         if request.is_json:
@@ -96,7 +96,7 @@ def login():
                             "status":False,
                             "message":"email or/and Password are wrong :(("
                         }}))
-@app.route('/addeducation', methods=['POST'])
+@app.route('/api/addeducation', methods=['POST'])
 def post_education():
     if request.method == "POST":
         if request.is_json:
@@ -140,7 +140,7 @@ def post_education():
             "code": 405,
             "message": "Method not allowed."
         }
-@app.route('/addwork', methods=['POST'])
+@app.route('/api/addwork', methods=['POST'])
 def post_work():
     if request.method == "POST":
         if request.is_json:
@@ -184,7 +184,7 @@ def post_work():
             "code": 405,
             "message": "Method not allowed."
         }
-@app.route('/editwork', methods=['PUT'])
+@app.route('/api/editwork', methods=['PUT'])
 def edit_work():
     if request.method == "PUT":
         if request.is_json:
@@ -234,7 +234,7 @@ def edit_work():
             "message": "Method not allowed."
         }
    
-@app.route('/editeducation', methods=['PUT'])
+@app.route('/api/editeducation', methods=['PUT'])
 def edit_education():
     if request.method == "PUT":
         if request.is_json:
@@ -283,7 +283,7 @@ def edit_education():
             "code": 405,
             "message": "Method not allowed."
         }
-@app.route('/editlanguage', methods=['PUT'])
+@app.route('/api/editlanguage', methods=['PUT'])
 def edit_language():
     if request.method == "PUT":
         if request.is_json:

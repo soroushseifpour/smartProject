@@ -30,7 +30,7 @@ const WorkModal = ({backdropHandler}) => {
   // Handle form submission
   const handleSubmit = async () => {
     axios.defaults.baseURL = 'http://127.0.0.1:5000';
-    const response = await axios.post('/addwork', formData, {
+    const response = await axios.post('/api/addwork', formData, {
       headers: {
         'Content-Type': 'application/json',
       },

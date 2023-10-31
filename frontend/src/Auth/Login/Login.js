@@ -49,7 +49,7 @@ const Login = () => {
         }
         if (formIsvalid) {
           axios.defaults.baseURL = 'http://127.0.0.1:5000';
-          const response = await axios.post('/login', u, {
+          const response = await axios.post('/api/login', u, {
             headers: {
               'Content-Type': 'application/json',
             }

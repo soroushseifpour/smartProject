@@ -44,7 +44,7 @@ const Signup = () => {
         }
         if (formIsvalid) {
           axios.defaults.baseURL = 'http://127.0.0.1:5000';
-          const response = await axios.post('/signup', user, {
+          const response = await axios.post('/api/signup', user, {
             headers: {
               'Content-Type': 'application/json',
             },

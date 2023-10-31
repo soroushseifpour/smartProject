@@ -28,7 +28,7 @@ const Language = () => {
             finalmark: values.finalmark,
         };
         axios.defaults.baseURL = 'http://127.0.0.1:5000';
-        const response = await axios.put('/editlanguage', newLanguageSkill, {
+        const response = await axios.put('/api/editlanguage', newLanguageSkill, {
             headers: {
               'Content-Type': 'application/json',
             },
