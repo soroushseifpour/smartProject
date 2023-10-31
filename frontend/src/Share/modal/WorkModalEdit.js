@@ -31,6 +31,7 @@ const WorkModalEdit = (props) => {
     });
   };
   const addHandler=async()=>{
+    axios.defaults.baseURL = 'http://127.0.0.1:5000';
     const response = await axios.put('/editwork', formData, {
       headers: {
         'Content-Type': 'application/json',

@@ -37,6 +37,7 @@ const EducationModalEdit = ({ data,backdropHandler }) => {
   // Handle form submission or data saving
   const handleSubmit = async() => {
     // Here, you can access the formData object, which contains the updated values
+    axios.defaults.baseURL = 'http://127.0.0.1:5000';
     const response = await axios.put('/editeducation', formData, {
       headers: {
         'Content-Type': 'application/json',

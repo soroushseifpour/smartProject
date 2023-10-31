@@ -37,7 +37,6 @@ def getuser():
             if request.is_json:
                 data=request.json
                 email=data["email"]
-                print(email)
                 if email:
                     user=mongo.db.users.find_one({"email":email})
                     if user:
@@ -49,39 +48,30 @@ def getuser():
 
 @app.route('/signup',methods=["POST"])
 def send_user():
-	if request.method=="POST":
-		if(request.is_json):
-			user=request.json
-			email=user['email']
-			isEmailExist=mongo.db.users.find_one({'email':email})
-			if(isEmailExist):
-				return{
-					"status":False,
-					"code":400,
-					"message":"The email is already taken:((("
-				}
-			else:
-				newUser=mongo.db.users.insert_one(user)
-				return {
-					"status":True,
-					"code":200,
-					"message":"Successfully Added! :))"
-				}
-@app.route('/test',methods=["GET"])
-def test():  
-    user=mongo.db.users.find()
-    return{
-        "test":user[0]["email"]
-    }          
+    if request.method=="POST":
+        if(request.is_json):
+            user=request.json
+            email=user['email']
+            isEmailExist=mongo.db.users.find_one({'email':email})
+            if(isEmailExist):
+                return{
+                    "status":False,
+                    "code":400,
+                    "message":"The email is already taken:((("
+                }
+            else:
+                newUser=mongo.db.users.insert_one(user)
+                return {
+                    "status":True,
+                    "code":200,
+                    "message":"Successfully Added! :))"
+                }
+        
 @app.route('/login',methods=["POST"])
 def login():
-    print("HHHHHHH")
-    print(request)
-    print(type(request.data))
     if request.method=="POST":
         if request.is_json:
             user=request.json
-            print(user)
             email=user['email']
             password=user['password'] 
             if email and password:
@@ -347,4 +337,4 @@ def edit_language():
 
 # Running app
 if __name__ == '__main__':
-	app.run(debug=True)
+	app.run(debug=False)

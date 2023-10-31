@@ -49,6 +49,7 @@ const EducationModal = () => {
     }
     
     dispatch(set(true));  
+    axios.defaults.baseURL = 'http://127.0.0.1:5000';
     const response = await axios.post('/addeducation', data, {
       headers: {
         'Content-Type': 'application/json',

@@ -6,6 +6,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { adding, setLogin } from '../../store/userSlice';
 import { set } from '../../store/loadingSlice';
 import axios from 'axios'
+import { setting } from '../../store/educationSlice';
+import {workSlice} from '../../store/workSlice';
+import {languageSlice} from '../../store/languageSlice';
 const Login = () => {
     const isEmailValid = (value) => {
         // Use a regular expression to check for a basic email format
@@ -38,22 +41,27 @@ const Login = () => {
     const dispatch = useDispatch()
     const loading = useSelector(p => p.loader).loader
     const formIsvalid = passwordIsValid && emailIsValid;
-    const formHandler = async (e) => {
+    const formHandler = async(e) => {
         e.preventDefault()
         const u = {
             email: emailValue,
-            password: passwordValue,
+            password: passwordValue
         }
         if (formIsvalid) {
-            const response = await axios.post('/login', u, {
-              headers: {
-                'Content-Type': 'application/json',
-              },
-            });
-            const data = response.data;
+          axios.defaults.baseURL = 'http://127.0.0.1:5000';
+          const response = await axios.post('/login', u, {
+            headers: {
+              'Content-Type': 'application/json',
+            }
+          });
+          const data = response.data;
             if (data.response.status) {
+                const data = response.data;
                 localStorage.setItem('user',JSON.stringify(data.response.user))
                 dispatch(adding(data.response.user))
+                dispatch(setting(data.response.user.educations || []))
+                dispatch(workSlice.actions.setting(data.response.user.works || []))
+                dispatch(languageSlice.actions.adding(data.response.user.language || {}))
                 dispatch(setLogin(true))
                 reset();
                 dispatch(set(false));
@@ -61,7 +69,7 @@ const Login = () => {
               }
               else {
                 dispatch(setLogin(false))
-                alert(data.response.message)
+                alert(response.message)
                 reset();
             }
         }
