@@ -1,3 +1,13 @@
-curl -X POST -H "Content-Type: application/json" -d "{'email': 's_seifpo@live.concordia.ca','password': 'soornggt'}" http://localhost:5000/login
-
-cp -r C:\Users\sseif\Repository\smartProject\frontend\build\* static\
+blinker==1.6.3
+click==8.1.7
+colorama==0.4.6
+dnspython==2.4.2
+Flask==3.0.0
+Flask-Cors==4.0.0
+Flask-PyMongo==2.3.0
+itsdangerous==2.1.2
+Jinja2==3.1.2
+MarkupSafe==2.1.3
+pymongo==4.5.0
+python-decouple==3.8
+Werkzeug==3.0.0
