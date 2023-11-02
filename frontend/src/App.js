@@ -12,6 +12,7 @@ import {set} from './store/loadingSlice'
 import Login from './Auth/Login/Login';
 import Signup from './Auth/Signup/Signup';
 import axios from 'axios';
+import Test from './Test/Test';
 function App() {
   const dispatch=useDispatch();
   const loader=useSelector(p=>p.loader).loader;
@@ -47,6 +48,7 @@ function App() {
           {isLogin && <Route path="/Signup" element={<Navigate to="/" />}/>}
           {!isLogin && <Route path="/login" element={<Login/>}/>}
           {!isLogin && <Route path="/Signup" element={<Signup/>}/>}
+          <Route path="/test" element={<Test/>}/>
         </Routes>
     </Fragment>
   );

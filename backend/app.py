@@ -67,6 +67,11 @@ def send_user():
                     "message":"Successfully Added! :))"
                 }
         
+@app.route('/api/test',methods=["get"])
+def test():
+    return{
+        "messege":"ok"
+    }
 @app.route('/api/login',methods=["POST"])
 def login():
     if request.method=="POST":
