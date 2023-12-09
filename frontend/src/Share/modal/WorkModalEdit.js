@@ -4,12 +4,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import { editing } from '../../store/workSlice'
 import axios from 'axios';
 const WorkModalEdit = (props) => {
-  const startDate = new Date(props.data.start);
-  const endDate = new Date(props.data.end);
+  const startDate = new Date(props.data.start)
+  const endDate = new Date(props.data.end) ;
 
   // Format the dates as "YYYY-MM-DD" strings
-  const formattedStartDate = startDate.toISOString().split('T')[0];
-  const formattedEndDate = endDate.toISOString().split('T')[0];
+  const formattedStartDate = startDate.toISOString().split('T')[0] ;
+  const formattedEndDate = endDate.toISOString().split('T')[0] ;
   const dispatch=useDispatch();
   const id=useSelector(u=>u.user.user).id;
   const [formData, setFormData] = useState({
@@ -31,6 +31,14 @@ const WorkModalEdit = (props) => {
     });
   };
   const addHandler=async()=>{
+    const { position, company, start, end, duties } = formData;
+
+    // Check if any of the fields are empty
+    if (!position || !company || !start || !end || !duties) {
+      // Handle the case where any field is empty (e.g., show an error message)
+     alert('Please fill in all fields');
+      return; // Prevent further execution
+    }
     axios.defaults.baseURL = 'http://127.0.0.1:5000';
     const response = await axios.put('/api/editwork', formData, {
       headers: {

@@ -27,6 +27,12 @@ const Language = () => {
             speaking: values.speaking,
             finalmark: values.finalmark,
         };
+        const { listening, reading, writing, speaking, finalmark } = newLanguageSkill;
+        if (!listening || !reading || !writing || !speaking || !finalmark) {
+            // Handle the case where any field is empty (e.g., show an error message)
+           alert('Please fill in all fields');
+            return; // Prevent further execution
+          }
         axios.defaults.baseURL = 'http://127.0.0.1:5000';
         const response = await axios.put('/api/editlanguage', newLanguageSkill, {
             headers: {

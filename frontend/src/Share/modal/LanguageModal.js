@@ -19,10 +19,7 @@ const LanguageModal = ({ initialValues, onSave }) => {
   // Handle the "Add" button click
   const handleAddClick = (e) => {
     onSave(values);
-    // Clear the input values after saving
-    setValues({});
   };
-console.log(values)
   return (
     <div className={styles.modalcontainer}>
       <h3>Language</h3>

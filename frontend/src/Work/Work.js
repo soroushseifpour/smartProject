@@ -10,7 +10,6 @@ const Work=()=>{
     const [openEditModal, setOpenEditModal] = useState(false);
     const [modalData, setModalData] = useState({});
     const works = useSelector((state) => state.work.works)
-    console.log(works)
     const dispatch = useDispatch()
     const backdropHandler=()=>{
         setOpenbackdrop(false);
@@ -46,9 +45,9 @@ const Work=()=>{
                     <p>{w.company}</p>
                     <small>{w.start}- {w.end}</small>
                     <ul className={styles.downlist}>
-                        {w.duties.split('.').map(d=>{
+                        {w.duties.split('.').map((d,index)=>{
                             return(
-                                <il className={styles.downlistItem}>{d}</il>
+                                <li className={styles.downlistItem} key={index}>{d}</li>
                             )
                         })}
                     </ul>

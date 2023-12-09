@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styles from './Signup.module.css';
 import useInput from '../../Hooks/useInput'
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 const Signup = () => {
@@ -91,6 +91,7 @@ const Signup = () => {
         <button type="submit" className={styles.loginButton}>
           Signup
         </button>
+        <p>Have an acount <Link to="/login">Login</Link></p>
       </form>
     </div>
   );

@@ -28,7 +28,6 @@ const Home = () => {
                             <button className={styles.btnedit}>Edit</button>
                         </div>
                         <h2 className='fw-bold'>Soroush Seifpour</h2>
-                        <button className={styles.btnedit}>Add Location</button>
                     </div>
                     <div className={styles.firstrow}>
                         <h3>Your Profile is Private</h3>
@@ -39,22 +38,9 @@ const Home = () => {
                     <div className={styles.homeleftcard}>
                         <div className={styles.firstrow}>
                             <h3 className={`${styles.header} fw-bold`}>Contact Information</h3>
-                            <button className={styles.btnedit}>Edit</button>
+                            
                         </div>
                         <p>S.Seifpour@yahoo.com</p>
-                        <button className={styles.largebtn}>Add Phone Number</button>
-                    </div>
-                    <div className={styles.homeleftcard}>
-                        <div className={styles.firstrow}>
-                            <h3 className={styles.header}>Website</h3>
-                            <button className={styles.btnedit}>Edit</button>
-                        </div>
-                        <ul className={styles.downlist}>
-                            <il className={styles.downlistItem}>Link1</il>
-                            <il className={styles.downlistItem}>Link1</il>
-                            <il className={styles.downlistItem}>Link1</il>
-                            <il className={styles.downlistItem}>Link1</il>
-                        </ul>
                     </div>
                 </div>
                 <div className={styles.homeright}>

@@ -35,7 +35,16 @@ const EducationModalEdit = ({ data,backdropHandler }) => {
   };
 
   // Handle form submission or data saving
-  const handleSubmit = async() => {
+  const handleSubmit = async(e) => {
+    e.preventDefault();
+    const { degree, school, start, finish, major } = formData;
+
+    // Check if any of the fields are empty
+    if (!degree || !school || !start || !finish || !major) {
+      // Handle the case where any field is empty (e.g., show an error message)
+     alert('Please fill in all fields');
+      return; // Prevent further execution
+    }
     // Here, you can access the formData object, which contains the updated values
     axios.defaults.baseURL = 'http://127.0.0.1:5000';
     const response = await axios.put('/api/editeducation', formData, {
@@ -109,7 +118,7 @@ const EducationModalEdit = ({ data,backdropHandler }) => {
           onChange={handleInputChange}
         />
       </div>
-      <button className={styles.btnAdd} onClick={handleSubmit}>
+      <button className={styles.btnAdd} onClick={(e)=>handleSubmit}>
         Add Education
       </button>
     </div>

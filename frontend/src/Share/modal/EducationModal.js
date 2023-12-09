@@ -47,7 +47,12 @@ const EducationModal = () => {
       start,
       finish,
     }
-    
+    // Check if any of the fields are empty
+    if (!degree || !school || !start || !finish || !major) {
+      // Handle the case where any field is empty (e.g., show an error message)
+     alert('Please fill in all fields');
+      return; // Prevent further execution
+    }
     dispatch(set(true));  
     axios.defaults.baseURL = 'http://127.0.0.1:5000';
     const response = await axios.post('/api/addeducation', data, {

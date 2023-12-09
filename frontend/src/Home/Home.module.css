@@ -111,3 +111,14 @@
     width: 80%;
     margin-top: .3rem;
 }
+@media (max-width:800px) {
+    .homecontainer{
+        flex-direction: column;
+    }
+    .homeleft{
+        width: 100%;
+    }
+    .homeright{
+        width: 100%;
+    }
+}

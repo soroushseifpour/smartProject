@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styles from './Login.module.css';
 import useInput from '../../Hooks/useInput'
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { adding, setLogin } from '../../store/userSlice';
 import { set } from '../../store/loadingSlice';
@@ -47,6 +47,7 @@ const Login = () => {
             email: emailValue,
             password: passwordValue
         }
+        console.log(u)
         if (formIsvalid) {
           axios.defaults.baseURL = 'http://127.0.0.1:5000';
           const response = await axios.post('/api/login', u, {
@@ -55,10 +56,11 @@ const Login = () => {
             }
           });
           const data = response.data;
+          console.log(data)
             if (data.response.status) {
                 const data = response.data;
-                localStorage.setItem('user',JSON.stringify(data.response.user))
-                dispatch(adding(data.response.user))
+                localStorage.setItem('user',JSON.stringify({email:data.response.user.email,password:data.response.user.password,id:data.response.user._id.$oid}))
+                dispatch(adding({email:data.response.user.email,password:data.response.user.password,id:data.response.user._id.$oid}))
                 dispatch(setting(data.response.user.educations || []))
                 dispatch(workSlice.actions.setting(data.response.user.works || []))
                 dispatch(languageSlice.actions.adding(data.response.user.language || {}))
@@ -106,6 +108,7 @@ const Login = () => {
         <button type="submit" className={styles.loginButton}>
           Login
         </button>
+      <p>Have no accout? <Link to="/Signup">Signup</Link></p>
       </form>
     </div>
   );

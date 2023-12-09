@@ -6,6 +6,7 @@ import axios from 'axios';
 const WorkModal = ({backdropHandler}) => {
   const works = useSelector((state) => state.work.works)
   const id=useSelector(u=>u.user.user).id;
+  console.log("id",id)
   const dispatch = useDispatch()
   // Create a state variable to hold the form data
   const [formData, setFormData] = useState({
@@ -29,6 +30,14 @@ const WorkModal = ({backdropHandler}) => {
 
   // Handle form submission
   const handleSubmit = async () => {
+    const { position, company, start, end, duties } = formData;
+
+    // Check if any of the fields are empty
+    if (!position || !company || !start || !end || !duties) {
+      // Handle the case where any field is empty (e.g., show an error message)
+     alert('Please fill in all fields');
+      return; // Prevent further execution
+    }
     axios.defaults.baseURL = 'http://127.0.0.1:5000';
     const response = await axios.post('/api/addwork', formData, {
       headers: {

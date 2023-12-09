@@ -9,7 +9,6 @@ export const languageSlice = createSlice({
   initialState,
   reducers: {
     adding: (state, action) => {
-      console.log(action.payload)
       state.marks={...action.payload}
     },
   },
