@@ -54,7 +54,7 @@ const EducationModal = () => {
       return; // Prevent further execution
     }
     dispatch(set(true));  
-    axios.defaults.baseURL = 'http://127.0.0.1:5000';
+    axios.defaults.baseURL = 'https://smart-api-32fb.onrender.com';
     const response = await axios.post('/api/addeducation', data, {
       headers: {
         'Content-Type': 'application/json',

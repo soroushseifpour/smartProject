@@ -46,7 +46,7 @@ const EducationModalEdit = ({ data,backdropHandler }) => {
       return; // Prevent further execution
     }
     // Here, you can access the formData object, which contains the updated values
-    axios.defaults.baseURL = 'http://127.0.0.1:5000';
+    axios.defaults.baseURL = 'https://smart-api-32fb.onrender.com';
     const response = await axios.put('/api/editeducation', formData, {
       headers: {
         'Content-Type': 'application/json',
