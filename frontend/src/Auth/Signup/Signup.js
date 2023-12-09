@@ -87,6 +87,7 @@ const Signup = () => {
             onBlur={passwordBlurHandler} name="email"
             required
           />
+          {passwordIsTouchd && !passwordIsValid && <span style={{color:"red"}}>The length must be greater than 5</span>}
         </div>
         <button type="submit" className={styles.loginButton}>
           Signup

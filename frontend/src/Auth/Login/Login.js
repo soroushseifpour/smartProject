@@ -47,7 +47,6 @@ const Login = () => {
             email: emailValue,
             password: passwordValue
         }
-        console.log(u)
         if (formIsvalid) {
           axios.defaults.baseURL = 'http://127.0.0.1:5000';
           const response = await axios.post('/api/login', u, {
@@ -71,7 +70,7 @@ const Login = () => {
               }
               else {
                 dispatch(setLogin(false))
-                alert(response.message)
+                alert("The inputs are not valid")
                 reset();
             }
         }
@@ -104,6 +103,7 @@ const Login = () => {
             onBlur={passwordBlurHandler} name="email"
             required
           />
+         {passwordIsTouchd && !passwordIsValid && <span style={{color:"red"}}>The length must be greater than 5</span>}
         </div>
         <button type="submit" className={styles.loginButton}>
           Login
