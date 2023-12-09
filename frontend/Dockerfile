@@ -1,23 +1,30 @@
-# Use an official Node runtime as a parent image
-FROM node:16
+# Use Node.js v16.17.0 as the base image
+FROM node:16.17.0 as build
 
-# Set the working directory to /app
+# Set working directory in the container
 WORKDIR /app
 
-# Copy the package.json and package-lock.json files to the working directory
-COPY package*.json ./
+# Copy package.json and package-lock.json (or yarn.lock) to the container
+COPY package.json .
+COPY package-lock.json .    
 
-# Install any needed packages specified in package.json
-RUN npm install
+# Install dependencies
+RUN npm install             
 
-# Copy the rest of the application code to the working directory
+# Copy the rest of the application files to the container
 COPY . .
 
-#Buidling the project
-RUN npm run build
+# Build the React app
+RUN npm run build             
 
-# Make port 3000 available to the world outside this container
-EXPOSE 3000
+# Use Nginx as the production server to serve the built React app
+FROM nginx:alpine
 
-# Command to run on container start
-CMD ["npm", "run", "start"]
+# Copy the build files from the build stage to the Nginx server
+COPY --from=build /app/build /usr/share/nginx/html
+
+# Expose port 80 for the Nginx server
+EXPOSE 80
+
+# Start Nginx when the container starts
+CMD ["nginx", "-g", "daemon off;"]
