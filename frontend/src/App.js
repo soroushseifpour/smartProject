@@ -31,10 +31,11 @@ function App() {
         },
       }).then(res=>{
         const i=res.data
+        console.log(i)
         dispatch(userSlice.actions.adding({email:i.response.user.email,id:i.response.user._id.$oid}))
         dispatch(setting(i.response.user.educations || []))
         dispatch(workSlice.actions.setting(i.response.user.works || []))
-        dispatch(languageSlice.actions.adding(i.response.user.language || {}))
+        dispatch(languageSlice.actions.setting(i.response.user.languages || []))
       });
         dispatch(set(false));
       }

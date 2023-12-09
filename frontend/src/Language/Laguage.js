@@ -1,87 +1,68 @@
-import React, { useEffect, useState } from 'react'
+import React, { Fragment, useEffect, useState } from 'react'
 import styles from './Language.module.css'
 import Backdrop from '../Share/backdrop/Backdrop';
 import LanguageModal from '../Share/modal/LanguageModal';
 import { useDispatch, useSelector } from 'react-redux';
 import { adding } from '../store/languageSlice';
 import axios from 'axios';
+import LanguageModalEdit from '../Share/modal/langaugeModalEdit';
 const Language = () => {
     const [openbackdrop, setOpenbackdrop] = useState(false);
     const [openModal, setOpenModal] = useState(false);
     const [openModalEdit, setOpenModalEdit] = useState(false);
-    const [languageSkills, setLanguageSkills] = useState({});
-    const language = useSelector((state) => state.language.marks);
-    const dispatch=useDispatch();
-    const id=useSelector(u=>u.user.user).id;
-    
-    useEffect(() => {
-        setLanguageSkills(language)
-    }, [])
-    const onSave = async (values) => {
-        //...saving values
-        const newLanguageSkill = {
-            id:id,
-            listening: values.listening,
-            reading: values.reading,
-            writing: values.writing,
-            speaking: values.speaking,
-            finalmark: values.finalmark,
-        };
-        const { listening, reading, writing, speaking, finalmark } = newLanguageSkill;
-        if (!listening || !reading || !writing || !speaking || !finalmark) {
-            // Handle the case where any field is empty (e.g., show an error message)
-           alert('Please fill in all fields');
-            return; // Prevent further execution
-          }
-        axios.defaults.baseURL = 'https://smart-api-32fb.onrender.com';
-        const response = await axios.put('/api/editlanguage', newLanguageSkill, {
-            headers: {
-              'Content-Type': 'application/json',
-            },
-          });
-        const {status} = response.data;
-        if(status){
-            // Update the languageSkills state with the new skill
-            setLanguageSkills(newLanguageSkill);
-            dispatch(adding(newLanguageSkill));
-            // Close the modal and backdrop
-            setOpenbackdrop(false);
-            setOpenModalEdit(false);
-        }
-
-    }
+    const [modalData, setModalData] = useState({});
+    const languages = useSelector((state) => state.language.marks)
+    console.log(languages)
     const backdropHandler = () => {
         setOpenbackdrop(false);
         setOpenModal(false);
         setOpenModalEdit(false);
     }
-    const modalEditHandler = () => {
-        setOpenModalEdit(true)
+    const modalHandler = async () => {
         setOpenbackdrop(true);
+        setOpenModal(true);
+    }
+    const languageEditHandler = (id) => {
+        console.log(id)
+        const data = languages.find(p => p._id.$oid === id)
+        console.log(data)
+        setModalData(data);
+        setOpenbackdrop(true);
+        setOpenModalEdit(true);
     }
     return (
         <div className={styles.skills}>
-            <div className={styles.header}>
-                <h5 className='fw-bold'>Language</h5>
-                <button className={styles.btnedit} onClick={modalEditHandler}>Edit</button>
-            </div>
-            <h6>Final Mark : {language.finalmark}</h6>
-            <div className={styles.skillitemlist}>
-                <div className={styles.skillitem}>
-                    Reading : {language.reading}
-                </div>
-                <div className={styles.skillitem}>
-                    Listening : {language.listening}
-                </div>
-                <div className={styles.skillitem}>
-                    Speaking : {language.speaking}
-                </div>
-                <div className={styles.skillitem}>
-                    Writing : {language.writing}
-                </div>
-            </div>
+            {languages.map((language, index) => {
+                return (
+                    <div key={index}>
+                        <div className={styles.header}>
+                            <h5 className='fw-bold'>{language.title}</h5>
+                            <button className={styles.btnedit} onClick={() => languageEditHandler(language._id.$oid)}>Edit</button>
+                        </div>
+                        <h6>Final Mark : {language.finalmark}</h6>
+                        <div className={styles.skillitemlist}>
+                            <div className={styles.skillitem}>
+                                Reading : {language.reading}
+                            </div>
+                            <div className={styles.skillitem}>
+                                Listening : {language.listening}
+                            </div>
+                            <div className={styles.skillitem}>
+                                Speaking : {language.speaking}
+                            </div>
+                            <div className={styles.skillitem}>
+                                Writing : {language.writing}
+                            </div>
+                        </div>
+                    </div>
+                )
+            })}
+                <button className={styles.btnAdd} onClick={modalHandler}>
+                    Add Education
+                </button>
             {openbackdrop && <Backdrop onclick={backdropHandler} />}
-            {openModalEdit && <LanguageModal initialValues={language} onSave={onSave} />}
+            {openModal && <LanguageModal />}
+            {openModalEdit && <LanguageModalEdit data={modalData} backdropHandler={backdropHandler} />}
         </div>
     )
 };

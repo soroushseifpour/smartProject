@@ -189,6 +189,53 @@ def post_work():
             "code": 405,
             "message": "Method not allowed."
         }
+@app.route('/api/addlanguage', methods=['POST'])
+def post_language():
+    if request.method == "POST":
+        if request.is_json:
+            data = request.json
+            print(data)
+            user_id = data.get('id')
+            language = {
+                "_id":ObjectId(),
+                "title":data['title'],
+                "reading": data['reading'],
+                "listening": data['listening'],
+                "writing": data['writing'],
+                "speaking": data['speaking'],
+                "finalmark": data['finalmark']
+            }
+            print(user_id)
+            user = mongo.db.users.find_one_and_update(
+                {"_id": ObjectId(str(user_id))},
+                {"$push": {"languages": language}}
+            )
+            language['_id'] = str(language['_id'])
+            if user:
+                return {
+                    "status": True,
+                    "_id":language["_id"],
+                    "code": 200,
+                    "message": "work added successfully."
+                }
+            else:
+                return {
+                    "status": False,
+                    "code": 404,
+                    "message": "User not found."
+                }
+        else:
+            return {
+                "status": False,
+                "code": 400,
+                "message": "Invalid JSON data."
+            }
+    else:
+        return {
+            "status": False,
+            "code": 405,
+            "message": "Method not allowed."
+        }    
 @app.route('/api/editwork', methods=['PUT'])
 def edit_work():
     if request.method == "PUT":
@@ -294,26 +341,23 @@ def edit_language():
         if request.is_json:
             data = request.json
             user_id = data.get('id')
-
+            language_id = data.get('_id')
             language = {
+                "title":data['title'],
                 "reading": data['reading'],
                 "listening": data['listening'],
                 "writing": data['writing'],
                 "speaking": data['speaking'],
                 "finalmark": data['finalmark']
             }
-            # Define the filter to find the user by _id
-            filter = {"_id": ObjectId(str(user_id))}
-
-            # Define the update operation using the $set operator
-            update = {
-                "$set": {
-                    "language": language
-                }
-            }
-
-            # Update the user document in one query
-            user = mongo.db.users.update_one(filter, update)
+            user = mongo.db.users.find_one_and_update(
+                {"_id": ObjectId(str(user_id)),  "languages._id": ObjectId(str(language_id))},
+                {"$set": {"languages.$.reading": language['reading'],
+                          "languages.$.listening": language['listening'],
+                          "languages.$.writing": language['writing'],
+                          "languages.$.title": language['title'],
+                          "languages.$.finalmark": language['finalmark']}}
+            )
 
             if user:
                 return {
@@ -339,6 +383,87 @@ def edit_language():
             "code": 405,
             "message": "Method not allowed."
         }
+@app.route('/api/users/<user_id>/languages/<item_id>', methods=['DELETE'])
+def delete_item(user_id, item_id):
+    if request.method=="DELETE":
+        users_collection = mongo.db.users
+
+        # Convert user_id and item_id to ObjectId for querying MongoDB
+        user_id_obj = ObjectId(user_id)
+        item_id_obj = ObjectId(item_id)
+
+        user = users_collection.find_one({'_id': user_id_obj})
+        if user:
+            # Check if the item exists in the user's items array
+            items = user.get('languages', [])
+            updated_items = [item for item in items if item['_id'] != item_id_obj]
+
+            # Update the user's items array in MongoDB
+            result = users_collection.update_one(
+                {'_id': user_id_obj},
+                {'$set': {'languages': updated_items}}
+            )
+
+            if result.modified_count > 0:
+                return jsonify({"message": f"language {item_id_obj} deleted for user {user_id}"})
+            else:
+                return jsonify({"error": "language ID not found in user's languages"}), 404
+        else:
+            return jsonify({"error": "User ID not found"}), 404
+@app.route('/api/users/<user_id>/educations/<item_id>', methods=['DELETE'])
+def delete_item(user_id, item_id):
+    if request.method=="DELETE":
+        users_collection = mongo.db.users
+
+        # Convert user_id and item_id to ObjectId for querying MongoDB
+        user_id_obj = ObjectId(user_id)
+        item_id_obj = ObjectId(item_id)
+
+        user = users_collection.find_one({'_id': user_id_obj})
+        if user:
+            # Check if the item exists in the user's items array
+            items = user.get('educations', [])
+            updated_items = [item for item in items if item['_id'] != item_id_obj]
+
+            # Update the user's items array in MongoDB
+            result = users_collection.update_one(
+                {'_id': user_id_obj},
+                {'$set': {'educations': updated_items}}
+            )
+
+            if result.modified_count > 0:
+                return jsonify({"message": f"education {item_id_obj} deleted for user {user_id}"})
+            else:
+                return jsonify({"error": "language ID not found in user's educations"}), 404
+        else:
+            return jsonify({"error": "User ID not found"}), 404
+@app.route('/api/users/<user_id>/works/<item_id>', methods=['DELETE'])
+def delete_item(user_id, item_id):
+    if request.method=="DELETE":
+        users_collection = mongo.db.users
+
+        # Convert user_id and item_id to ObjectId for querying MongoDB
+        user_id_obj = ObjectId(user_id)
+        item_id_obj = ObjectId(item_id)
+
+        user = users_collection.find_one({'_id': user_id_obj})
+        if user:
+            # Check if the item exists in the user's items array
+            items = user.get('works', [])
+            updated_items = [item for item in items if item['_id'] != item_id_obj]
+
+            # Update the user's items array in MongoDB
+            result = users_collection.update_one(
+                {'_id': user_id_obj},
+                {'$set': {'works': updated_items}}
+            )
+
+            if result.modified_count > 0:
+                return jsonify({"message": f"work {item_id_obj} deleted for user {user_id}"})
+            else:
+                return jsonify({"error": "language ID not found in user's works"}), 404
+        else:
+            return jsonify({"error": "User ID not found"}), 404
 
 # Running app
 if __name__ == '__main__':

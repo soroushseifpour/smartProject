@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styles from './EducationModalEdit.module.css';
 import { useDispatch, useSelector } from 'react-redux';
-import { editing } from '../../store/educationSlice';
+import { editing, removing } from '../../store/educationSlice';
 import axios from 'axios';
 
 const EducationModalEdit = ({ data,backdropHandler }) => {
@@ -59,7 +59,12 @@ const EducationModalEdit = ({ data,backdropHandler }) => {
     }
     // You can perform further actions like sending the data to an API or updating state in a parent component.
   };
-
+  const deleteHandler= async(itemid)=>{
+    const response=await axios.delete(`http://localhost:5000/api/users/${id}/educations/${itemid}`)
+    console.log(response);
+    backdropHandler()
+    dispatch(removing(itemid))
+  }
   return (
     <div className={styles.modalcontainer}>
       <h3>Education</h3>
@@ -120,6 +125,9 @@ const EducationModalEdit = ({ data,backdropHandler }) => {
       </div>
       <button className={styles.btnAdd} onClick={(e)=>handleSubmit}>
         Add Education
+      </button>
+      <button className={styles.btnDelete} onClick={()=>deleteHandler(data._id.$oid)}>
+        Delete Education
       </button>
     </div>
   );

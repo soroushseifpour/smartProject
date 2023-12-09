@@ -62,7 +62,7 @@ const Login = () => {
                 dispatch(adding({email:data.response.user.email,password:data.response.user.password,id:data.response.user._id.$oid}))
                 dispatch(setting(data.response.user.educations || []))
                 dispatch(workSlice.actions.setting(data.response.user.works || []))
-                dispatch(languageSlice.actions.adding(data.response.user.language || {}))
+                dispatch(languageSlice.actions.setting(data.response.user.languages || []))
                 dispatch(setLogin(true))
                 reset();
                 dispatch(set(false));

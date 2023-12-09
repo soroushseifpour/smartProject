@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styles from './WorkModalEdit.module.css';
 import { useDispatch, useSelector } from 'react-redux';
-import { editing } from '../../store/workSlice'
+import { editing, removing } from '../../store/workSlice'
 import axios from 'axios';
 const WorkModalEdit = (props) => {
   const startDate = new Date(props.data.start)
@@ -47,6 +47,11 @@ const WorkModalEdit = (props) => {
     });
     dispatch(editing({id:props.data._id.$oid,updatedWork:formData}));
     props.backdropHandler();
+  }
+  const deleteHandler= async(itemid)=>{
+    const response=await axios.delete(`http://localhost:5000/api/users/${id}/works/${itemid}`);
+    props.backdropHandler();
+    dispatch(removing(itemid))
   }
   return (
     <div className={styles.modalcontainer}>
@@ -104,6 +109,9 @@ const WorkModalEdit = (props) => {
         />
       </div>
       <button className={styles.btnAdd} onClick={addHandler}>Add Work</button>
+      <button className={styles.btnDelete} onClick={()=>deleteHandler(props._id.$oid)}>
+        Delete Education
+      </button>
     </div>
   );
 };
