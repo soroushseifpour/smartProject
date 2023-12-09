@@ -9,6 +9,7 @@ const Home = () => {
     const [activeItem, setActiveItem] = useState(null);
     const loader=useSelector(p=>p.loader).loader;
     
+    const email=useSelector(u=>u.user.user).email;
     const toggleAccordionItem = (item) => {
         if (activeItem === item) {
             setActiveItem(null); // Close the item if it's already open
@@ -27,7 +28,7 @@ const Home = () => {
                             <h3 className={styles.header}>About Me</h3>
                             <button className={styles.btnedit}>Edit</button>
                         </div>
-                        <h2 className='fw-bold'>Soroush Seifpour</h2>
+                        <h2 className='fw-bold'>{email}</h2>
                     </div>
                     <div className={styles.firstrow}>
                         <h3>Your Profile is Private</h3>
@@ -40,13 +41,13 @@ const Home = () => {
                             <h3 className={`${styles.header} fw-bold`}>Contact Information</h3>
                             
                         </div>
-                        <p>S.Seifpour@yahoo.com</p>
+                        <p>{email}</p>
                     </div>
                 </div>
                 <div className={styles.homeright}>
                     <div className={styles.cardprofile}>
                         <div className={styles.cardprofilerigth}>
-                            <h5>Soroush Seifpour</h5>
+                            <h5>{email}</h5>
                             <p>Your profile is almost complete. Finish your profile to unlock better job matches and stand out</p>
                         </div>
                     </div>
