@@ -27,7 +27,7 @@ export const educationSlice = createSlice({
       }
     },
     removing: (state,action) => {
-      state.educations=state.educations.filter(p=>p.id!==action.payload);
+      state.educations=state.educations.filter(p=>p._id.$oid!==action.payload);
     },
   },
 })

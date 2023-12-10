@@ -384,7 +384,7 @@ def edit_language():
             "message": "Method not allowed."
         }
 @app.route('/api/users/<user_id>/languages/<item_id>', methods=['DELETE'])
-def delete_item(user_id, item_id):
+def delete_language(user_id, item_id):
     if request.method=="DELETE":
         users_collection = mongo.db.users
 
@@ -411,7 +411,7 @@ def delete_item(user_id, item_id):
         else:
             return jsonify({"error": "User ID not found"}), 404
 @app.route('/api/users/<user_id>/educations/<item_id>', methods=['DELETE'])
-def delete_item(user_id, item_id):
+def delete_education(user_id, item_id):
     if request.method=="DELETE":
         users_collection = mongo.db.users
 
@@ -438,7 +438,7 @@ def delete_item(user_id, item_id):
         else:
             return jsonify({"error": "User ID not found"}), 404
 @app.route('/api/users/<user_id>/works/<item_id>', methods=['DELETE'])
-def delete_item(user_id, item_id):
+def delete_work(user_id, item_id):
     if request.method=="DELETE":
         users_collection = mongo.db.users
 

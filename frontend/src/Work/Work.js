@@ -10,6 +10,7 @@ const Work=()=>{
     const [openEditModal, setOpenEditModal] = useState(false);
     const [modalData, setModalData] = useState({});
     const works = useSelector((state) => state.work.works)
+    console.log(works)
     const dispatch = useDispatch()
     const backdropHandler=()=>{
         setOpenbackdrop(false);

@@ -28,8 +28,8 @@ export const workSlice = createSlice({
       }
     },
     removing: (state,action) => {
-      state.works=state.works.filter(p=>p.id!==action.payload);
-    },
+      state.works=state.works.filter(p=>p._id.$oid!==action.payload);
+    }
   },
 })
 

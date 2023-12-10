@@ -39,7 +39,7 @@ const WorkModalEdit = (props) => {
      alert('Please fill in all fields');
       return; // Prevent further execution
     }
-    axios.defaults.baseURL = 'https://smart-api-32fb.onrender.com';
+    axios.defaults.baseURL = 'http://localhost:5000';
     const response = await axios.put('/api/editwork', formData, {
       headers: {
         'Content-Type': 'application/json',
@@ -109,7 +109,7 @@ const WorkModalEdit = (props) => {
         />
       </div>
       <button className={styles.btnAdd} onClick={addHandler}>Add Work</button>
-      <button className={styles.btnDelete} onClick={()=>deleteHandler(props._id.$oid)}>
+      <button className={styles.btnDelete} onClick={()=>deleteHandler(props.data._id.$oid)}>
         Delete Education
       </button>
     </div>
