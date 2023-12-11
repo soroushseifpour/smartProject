@@ -16,10 +16,8 @@ export const languageSlice = createSlice({
     },
     languageEditng:(state,action)=>{
       const { id, updatedLang } = action.payload;
-      console.log(updatedLang)
       // Find the index of the edc with the specified ID
       const eduIndex = state.marks.findIndex((ed) => ed._id.$oid === id);
-      console.log(eduIndex);
       if (eduIndex !== -1) {
         // Update the edc at the found index with the updated data
         state.marks[eduIndex] = updatedLang;

@@ -4,8 +4,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 import {deleteLanguage, languageEditng} from '../../store/languageSlice'
 const LanguageModalEdit = ({ data,backdropHandler}) => {
-  // Initialize state for input values
-  console.log(data)
   const [values, setValues] = useState(data || {});
   const dispatch=useDispatch();
   const id=useSelector(u=>u.user.user).id;
@@ -52,7 +50,6 @@ const LanguageModalEdit = ({ data,backdropHandler}) => {
       
       axios.defaults.baseURL = 'https://smart-api-32fb.onrender.com';
       const response=await axios.delete(`/api/users/${id}/languages/${itemid}`)
-      console.log(response);
       backdropHandler()
       dispatch(deleteLanguage(itemid))
     }

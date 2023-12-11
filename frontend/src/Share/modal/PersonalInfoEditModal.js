@@ -36,7 +36,7 @@ const PersonalInfoEditModal = ({backdropHandler}) => {
                 },
             });
             if(response.status){
-                dispatch(adding({ ...user, date: selectedDate || null, option: selectedOption || null }));
+                dispatch(adding({ ...user, date: selectedDate || null, status: selectedOption || null }));
                 backdropHandler()
             }
             // Perform your API request or Redux action dispatch here

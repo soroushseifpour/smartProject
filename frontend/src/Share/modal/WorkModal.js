@@ -6,7 +6,6 @@ import axios from 'axios';
 const WorkModal = ({backdropHandler}) => {
   const works = useSelector((state) => state.work.works)
   const id=useSelector(u=>u.user.user).id;
-  console.log("id",id)
   const dispatch = useDispatch()
   // Create a state variable to hold the form data
   const [formData, setFormData] = useState({

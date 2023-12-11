@@ -38,7 +38,6 @@ export const fetchUser=()=>{
   return async (dispatch,getState)=>{
       const user = localStorage.getItem('user');
       const parsedUser = JSON.parse(user)
-      console.log(parsedUser)
       if (parsedUser && !getState().isLogin) {
         dispatch(setLogin(true))
         fetch('/fetchuser', {
@@ -48,7 +47,6 @@ export const fetchUser=()=>{
           },
           body: JSON.stringify({ "username": parsedUser.username })
         }).then(p=>p.json()).then(i=>{
-          console.log(i.response)
           dispatch(adding(i.response.user))
         })
       }

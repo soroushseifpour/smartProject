@@ -62,7 +62,6 @@ const EducationModalEdit = ({ data,backdropHandler }) => {
   const deleteHandler= async(itemid)=>{
     axios.defaults.baseURL = 'https://smart-api-32fb.onrender.com';
     const response=await axios.delete(`/api/users/${id}/educations/${itemid}`)
-    console.log(response);
     backdropHandler()
     dispatch(removing(itemid))
   }

@@ -22,9 +22,7 @@ const Language = () => {
         setOpenModal(true);
     }
     const languageEditHandler = (id) => {
-        console.log(id)
         const data = languages.find(p => p._id.$oid === id)
-        console.log(data)
         setModalData(data);
         setOpenbackdrop(true);
         setOpenModalEdit(true);

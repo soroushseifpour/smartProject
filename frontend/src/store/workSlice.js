@@ -13,12 +13,10 @@ export const workSlice = createSlice({
       state.works=action.payload
     },
     adding: (state, action) => {
-      console.log(action.payload)
       state.works = [...state.works, action.payload];
     },
     editing:(state,action)=>{
       const { id, updatedWork } = action.payload;
-      // console.log(id,updatedWork)
       // Find the index of the work with the specified ID
       const workIndex = state.works.findIndex((work) => work._id.$oid === id);
 

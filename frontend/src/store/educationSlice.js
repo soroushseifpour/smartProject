@@ -17,10 +17,8 @@ export const educationSlice = createSlice({
     },
     editing:(state,action)=>{
       const { id, updatedEdc } = action.payload;
-      console.log(updatedEdc)
       // Find the index of the edc with the specified ID
       const eduIndex = state.educations.findIndex((ed) => ed._id.$oid === id);
-      console.log(eduIndex);
       if (eduIndex !== -1) {
         // Update the edc at the found index with the updated data
         state.educations[eduIndex] = updatedEdc;
