@@ -60,8 +60,8 @@ const LanguageModal = () => {
     }
     dispatch(set(true));
     console.log(newLanguageSkill)
-    // axios.defaults.baseURL = 'http://localhost:5000';
-    const response = await axios.post('http://localhost:5000/api/addlanguage',newLanguageSkill,  {
+    axios.defaults.baseURL = 'http://localhost:5000';
+    const response = await axios.post('/api/addlanguage',newLanguageSkill,  {
       headers: {
         'Content-Type': 'application/json',
       },

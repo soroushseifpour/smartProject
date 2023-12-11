@@ -49,7 +49,8 @@ const WorkModalEdit = (props) => {
     props.backdropHandler();
   }
   const deleteHandler= async(itemid)=>{
-    const response=await axios.delete(`http://localhost:5000/api/users/${id}/works/${itemid}`);
+    axios.defaults.baseURL = 'https://smart-api-32fb.onrender.com';
+    const response=await axios.delete(`/api/users/${id}/works/${itemid}`);
     props.backdropHandler();
     dispatch(removing(itemid))
   }
@@ -110,7 +111,7 @@ const WorkModalEdit = (props) => {
       </div>
       <button className={styles.btnAdd} onClick={addHandler}>Add Work</button>
       <button className={styles.btnDelete} onClick={()=>deleteHandler(props.data._id.$oid)}>
-        Delete Education
+        Delete 
       </button>
     </div>
   );

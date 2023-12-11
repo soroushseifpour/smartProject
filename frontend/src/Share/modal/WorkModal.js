@@ -38,7 +38,8 @@ const WorkModal = ({backdropHandler}) => {
      alert('Please fill in all fields');
       return; // Prevent further execution
     }
-    axios.defaults.baseURL = 'http://localhost:5000';
+
+    axios.defaults.baseURL = 'https://smart-api-32fb.onrender.com';
     const response = await axios.post('/api/addwork', formData, {
       headers: {
         'Content-Type': 'application/json',

@@ -35,8 +35,9 @@ const LanguageModalEdit = ({ data,backdropHandler}) => {
        alert('Please fill in all fields');
         return; // Prevent further execution
     }
-    // axios.defaults.baseURL = 'http://localhost:5000';
-    const response = await axios.put('http://localhost:5000/api/editlanguage', newLanguageSkill, {
+    
+    axios.defaults.baseURL = 'https://smart-api-32fb.onrender.com';
+    const response = await axios.put('/api/editlanguage', newLanguageSkill, {
         headers: {
           'Content-Type': 'application/json',
         },
@@ -48,7 +49,9 @@ const LanguageModalEdit = ({ data,backdropHandler}) => {
       }
     }   
     const deleteHandler= async(itemid)=>{
-      const response=await axios.delete(`http://localhost:5000/api/users/${id}/languages/${itemid}`)
+      
+      axios.defaults.baseURL = 'https://smart-api-32fb.onrender.com';
+      const response=await axios.delete(`/api/users/${id}/languages/${itemid}`)
       console.log(response);
       backdropHandler()
       dispatch(deleteLanguage(itemid))
