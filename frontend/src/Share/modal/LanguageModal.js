@@ -71,6 +71,7 @@ const LanguageModal = () => {
       const languageId = _id;
       dispatch(adding({
         _id: { $oid: languageId },
+        title,
         listening,
         reading,
         writing,
