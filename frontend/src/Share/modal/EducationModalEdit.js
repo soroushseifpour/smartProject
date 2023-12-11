@@ -124,7 +124,7 @@ const EducationModalEdit = ({ data,backdropHandler }) => {
           onChange={handleInputChange}
         />
       </div>
-      <button className={styles.btnAdd} onClick={(e)=>handleSubmit}>
+      <button className={styles.btnAdd} onClick={(e)=>handleSubmit(e)}>
         Add Education
       </button>
       <button className={styles.btnDelete} onClick={()=>deleteHandler(data._id.$oid)}>

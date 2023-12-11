@@ -31,7 +31,6 @@ function App() {
         },
       }).then(res=>{
         const i=res.data
-        console.log(i)
         dispatch(userSlice.actions.adding({email:i.response.user.email,id:i.response.user._id.$oid,status:i.response.user.status,date:i.response.user.date}))
         dispatch(setting(i.response.user.educations || []))
         dispatch(workSlice.actions.setting(i.response.user.works || []))

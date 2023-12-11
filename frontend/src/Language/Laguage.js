@@ -12,7 +12,6 @@ const Language = () => {
     const [openModalEdit, setOpenModalEdit] = useState(false);
     const [modalData, setModalData] = useState({});
     const languages = useSelector((state) => state.language.marks)
-    console.log(languages)
     const backdropHandler = () => {
         setOpenbackdrop(false);
         setOpenModal(false);
@@ -32,6 +31,7 @@ const Language = () => {
     }
     return (
         <div className={styles.skills}>
+            <h3>Language</h3>
             {languages.map((language, index) => {
                 return (
                     <div key={index}>
@@ -58,7 +58,7 @@ const Language = () => {
                 )
             })}
                 <button className={styles.btnAdd} onClick={modalHandler}>
-                    Add Education
+                    Add Language
                 </button>
             {openbackdrop && <Backdrop onclick={backdropHandler} />}
             {openModal && <LanguageModal />}

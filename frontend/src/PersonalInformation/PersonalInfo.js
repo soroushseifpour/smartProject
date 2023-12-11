@@ -24,7 +24,7 @@ const PersonalInfo=()=>{
             <p>Mariage Status: {user.status ? user.status : ''}</p>
             <p>Birthday: {user.date ? user.date : ""}</p>
             <button className={styles.btnAdd} onClick={modalHandler}>
-                    Add Education
+                    Add Info
                 </button>
             {openbackdrop && <Backdrop onclick={backdropHandler} />}
             {openModalEdit && <PersonalInfoEditModal backdropHandler={backdropHandler} />}
