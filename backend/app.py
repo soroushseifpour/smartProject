@@ -383,6 +383,46 @@ def edit_language():
             "code": 405,
             "message": "Method not allowed."
         }
+@app.route('/api/editinformation', methods=['PUT'])
+def edit_info():
+    if request.method == "PUT":
+        if request.is_json:
+            data = request.json
+            user_id = data.get('id')
+            new_date=data.get('date')
+            new_status=data.get('status')
+            print(new_status)
+            user = mongo.db.users.find_one_and_update(
+                {"_id": ObjectId(str(user_id))},
+                {"$set": {
+                    "date": new_date,  # Replace 'date' with the field name where you store the date
+                    "status": new_status  # Replace 'status' with the field name where you store the status
+                }}
+            )
+            if user:
+                return {
+                    "status": True,
+                    "code": 200,
+                    "message": "info updated successfully."
+                }
+            else:
+                return {
+                    "status": False,
+                    "code": 404,
+                    "message": "User or info not found."
+                }
+        else:
+            return {
+                "status": False,
+                "code": 400,
+                "message": "Invalid JSON data."
+            }
+    else:
+        return {
+            "status": False,
+            "code": 405,
+            "message": "Method not allowed."
+        }
 @app.route('/api/users/<user_id>/languages/<item_id>', methods=['DELETE'])
 def delete_language(user_id, item_id):
     if request.method=="DELETE":

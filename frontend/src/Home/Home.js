@@ -5,6 +5,7 @@ import Work from '../Work/Work'
 import Education from '../Education/Education'
 import Language from '../Language/Laguage'
 import { useSelector } from 'react-redux'
+import PersonalInfo from '../PersonalInformation/PersonalInfo'
 const Home = () => {
     const [activeItem, setActiveItem] = useState(null);
     const loader=useSelector(p=>p.loader).loader;
@@ -125,6 +126,31 @@ const Home = () => {
                             >
                                 <div className="card-body">
                                     <Language />
+                                </div>
+                            </div>
+                        </div>
+                        {/* Item 5 */}
+                        <div className="card">
+                            <div className="card-header" id="headingFifth">
+                                <h5 className="mb-0">
+                                    <button
+                                        className={`btn btn-link ${activeItem === 'item5' ? '' : 'collapsed'}`}
+                                        onClick={() => toggleAccordionItem('item5')}
+                                        
+                                        style={{"textDecoration":"none","color":"black"}}
+                                    >
+                                        Personal Information
+                                    </button>
+                                </h5>
+                            </div>
+                            <div
+                                id="collapseFifth"
+                                className={`collapse ${activeItem === 'item5' ? 'show' : ''}`}
+                                aria-labelledby="headingFifth"
+                                data-parent="#accordion"
+                            >
+                                <div className="card-body">
+                                    <PersonalInfo />
                                 </div>
                             </div>
                         </div>
