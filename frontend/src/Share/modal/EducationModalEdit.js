@@ -60,7 +60,8 @@ const EducationModalEdit = ({ data,backdropHandler }) => {
     // You can perform further actions like sending the data to an API or updating state in a parent component.
   };
   const deleteHandler= async(itemid)=>{
-    const response=await axios.delete(`http://localhost:5000/api/users/${id}/educations/${itemid}`)
+    axios.defaults.baseURL = 'https://smart-api-32fb.onrender.com';
+    const response=await axios.delete(`/api/users/${id}/educations/${itemid}`)
     console.log(response);
     backdropHandler()
     dispatch(removing(itemid))

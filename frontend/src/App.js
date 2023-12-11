@@ -24,7 +24,7 @@ function App() {
       dispatch(setLogin(true))
       dispatch(set(true));
       const email={email:parsedUser.email}
-      axios.defaults.baseURL = 'http://127.0.0.1:5000';
+      axios.defaults.baseURL = 'https://smart-api-32fb.onrender.com';
       axios.post('/api/fetchuser', email, {
         headers: {
           'Content-Type': 'application/json',
